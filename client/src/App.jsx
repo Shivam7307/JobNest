@@ -1,36 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import ClientPanel from './ClientPanel';
+import React, { useState } from 'react';
+import AdminLogin from './login/AdminLogin';
+import ClientLogin from './login/ClientLogin';
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [loginType, setLoginType] = useState('');
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button className='bg-amber-500'>Checking tailwind css</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen flex items-center justify-center bg-blue-100 font-sans">
+      {!loginType && (
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm flex flex-col items-center">
+          <h2 className="text-2xl font-bold mb-6 text-blue-700 text-center">Select Login Type</h2>
+          <button
+            className="w-full py-2 px-4 mb-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onClick={() => setLoginType('admin')}
+          >
+            Admin Login
+          </button>
+          <button
+            className="w-full py-2 px-4 mb-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-300"
+            onClick={() => setLoginType('client')}
+          >
+            Client Login
+          </button>
+          <button
+            className="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-blue-700 font-semibold rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-200"
+            onClick={() => setLoginType('guest')}
+          >
+            Continue without login
+          </button>
+        </div>
+      )}
+      {loginType === 'admin' && <AdminLogin />}
+      {loginType === 'client' && <ClientLogin />}
+      {loginType === 'guest' && <ClientPanel />}
+    </div>
+  );
 }
 
-export default App
+export default App;
